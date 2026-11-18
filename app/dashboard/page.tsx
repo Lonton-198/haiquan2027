@@ -91,26 +91,40 @@ export default function Dashboard(){
  }
  async function generateBatches(initialId:string){
    let last=-1;let target=0;let complete=false;
-   // Limit paid requests per click; keep progress already saved if a batch fails.
-   for(let i=0;i<40&&!complete;i++){
-     const status=await post('/api/generate-quiz',JSON.stringify({action:'batch',quizId:initialId}));
-     last=status.done;target=status.target;complete=status.complete;
-     P({done:last,target});
-     await refresh();
-     if(status.paused){
-       throw new Error(`Đã lưu ${last}/${target} câu. ${status.reason||'Tạm dừng để tránh tốn API.'}`);
+   // Save every batch server-side, but avoid re-fetching the whole library after
+   // every two questions. Large quiz JSON otherwise causes unnecessary traffic.
+   // Each click adds at most 16 questions so progress is easy to recover.
+   try {
+     for(let i=0;i<8&&!complete;i++){
+       let status:{done:number;target:number;complete:boolean;added?:number;paused?:boolean;reason?:string};
+       try {
+         status=await post('/api/generate-quiz',JSON.stringify({action:'batch',quizId:initialId}));
+       } catch(err){
+         const reason=err instanceof Error?err.message:String(err);
+         throw new Error(`Lỗi khi tạo/lưu đợt ${i+1}: ${reason}. Các câu đã lưu trước đó vẫn được giữ.`);
+       }
+       last=status.done;target=status.target;complete=status.complete;
+       P({done:last,target});
+       if(status.paused)throw new Error(`Đã lưu ${last}/${target} câu. ${status.reason||'Tạm dừng để tránh tốn API.'}`);
+       if(!complete && (!status.added || status.added<1)){
+         throw new Error(`Đã lưu ${last}/${target} câu. Đợt này không có câu hợp lệ.`);
+       }
      }
-     if(!complete && (!status.added || status.added<1)){
-       throw new Error(`Đã lưu ${last}/${target} câu. Tạm dừng vì đợt này không có câu hợp lệ.`);
+     if(complete)N('Đã lưu trọn bộ '+target+' câu. Có thể làm lại nhiều lần mà không tốn phí tạo đề.');
+     else N(`Đã lưu ${last}/${target} câu. Nhấn “Tiếp tục tạo” để hoàn tất phần còn lại.`);
+   } finally {
+     // Refresh once even when generation pauses/fails: never lose the visible progress.
+     try {await refresh()}
+     catch(err){
+       const reason=err instanceof Error?err.message:String(err);
+       throw new Error(`Đã lưu tiến độ tạo đề${last>=0?` (${last}/${target})`:''}, nhưng không tải lại được danh sách: ${reason}. Hãy tải lại trang.`);
      }
    }
-   if(!complete)throw new Error(`Đã lưu ${last}/${target} câu. Đã chạm giới hạn lượt tạo cho một lần bấm để kiểm soát chi phí.`);
-   N('Đã lưu trọn bộ '+target+' câu. Có thể làm lại nhiều lần mà không tốn phí tạo đề.');
  }
  async function createQuiz(){await work('quiz',async()=>{
    const created=await post('/api/generate-quiz',JSON.stringify({action:'start',documentId:docId,topic,count}));
    P({done:0,target:created.target});
-   try{await generateBatches(created.quizId)}finally{await refresh()}
+   await generateBatches(created.quizId)
  })}
  async function resumeQuiz(id:string){await work('quiz',async()=>{P(null);await generateBatches(id)})}
  function isDraft(q:Quiz){return q.title.startsWith('⏳ [')}
