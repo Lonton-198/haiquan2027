@@ -141,16 +141,22 @@ export async function POST(req:NextRequest){
       return NextResponse.json({quizId:quiz.id,target,done:existing.length,complete:false,paused:true,
         reason:lastError||`Không tìm được câu đạt tiêu chuẩn trong lượt này (bị loại ${rejects.structure}). Không mất câu đã lưu; không tự gọi API thêm.`});
     }
-    const next=[...existing,...accepted];
-    const complete=next.length>=target;
-    const title=complete?quiz.title.replace(DRAFT,''):quiz.title;
-    // Optimistic concurrency: prevent a second browser/tab from overwriting prior saved questions.
-    const {data:saved,error:saveError}=await db.from('quizzes').update({questions:next,title})
-      .eq('id',quiz.id).eq('user_id',user.id)
-      .eq('questions',JSON.stringify(rawQuestions)).select('id').maybeSingle();
-    if(saveError)throw saveError;
-    if(!saved)return NextResponse.json({quizId:quiz.id,target,done:existing.length,complete:false,paused:true,
+    // Atomic append through a database function. Never put a growing array of
+    // old questions in the URL: large draft quizzes otherwise trigger 414/400 errors.
+    // The function checks the previous count under the row lock, preserving
+    // questions saved by another browser tab.
+    const {data:saved,error:saveError}=await db.rpc('append_quiz_batch',{
+      p_quiz_id:quiz.id,
+      p_expected_count:existing.length,
+      p_target:target,
+      p_new_questions:accepted,
+    });
+    if(saveError){
+      if(saveError.code==='PGRST202')throw new Error('Chưa chạy SQL cập nhật v0.8.3 trong Supabase (append_quiz_batch).');
+      throw saveError;
+    }
+    if(!saved || saved.saved!==true)return NextResponse.json({quizId:quiz.id,target,done:existing.length,complete:false,paused:true,
       reason:'Đề vừa được cập nhật từ một phiên làm việc khác. Tải lại trang để tiếp tục, không ghi đè các câu đã lưu.'});
-    return NextResponse.json({quizId:quiz.id,target,done:next.length,complete,added:accepted.length});
+    return NextResponse.json({quizId:quiz.id,target,done:saved.done,complete:saved.complete,added:accepted.length});
   }catch(err){return failure(err)}
 }
