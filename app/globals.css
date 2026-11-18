@@ -10,3 +10,36 @@
 .original-text{white-space:pre-wrap;overflow-wrap:anywhere;line-height:2;max-height:78vh;overflow-y:auto;padding:24px;background:white;border:1px solid var(--line);border-radius:10px;font-family:Arial,'Be Vietnam Pro',sans-serif;font-size:15px}
 .progress-box{background:#eef8f2;border:1px solid #b8dfc5;padding:18px;border-radius:10px;margin-top:15px;display:grid;gap:10px}
 .progress-box small{color:var(--sub);line-height:1.6}.progress-track{height:10px;background:#d2e7dc;overflow:hidden;border-radius:30px}.progress-fill{height:100%;background:#196b52;transition:width .25s}
+
+/* v0.6 - Học cùng lon ton · giao diện sáng duy nhất */
+:root{--ink:#1c2c45;--sub:#72809a;--green:#255db4;--line:#e4eaf3;--bg:#f7f9fd}
+body{background:var(--bg);color:var(--ink)}
+.sidebar{background:#fff;border-right:1px solid var(--line)}
+.logo-button{border:0;background:transparent;text-align:left;padding:4px 2px;width:100%;cursor:pointer;color:var(--ink)}
+.logo b{color:#2e73ca}.logo-mark,.brand-icon{background:#285fb4}
+.nav:hover,.nav.active{background:#eaf2ff;color:#225cb1}
+.workspace-caption{margin:18px 10px 8px;padding:12px;background:#f1f6ff;border-radius:12px;color:#315f9f;display:flex;gap:9px;align-items:center;font-size:12px;font-weight:700}
+.nav-title{margin:45px 12px 12px}.top{background:#fff}.eyebrow{color:#597eae}
+.hero{border-radius:22px;background:linear-gradient(115deg,#142d55,#285fa8);padding:36px;color:white;margin-bottom:30px}
+.hero .eyebrow{color:#b5cef0}.hero h1{font-size:31px;color:white;margin:12px 0}.hero p{color:#d4e3f7;font-size:13px;line-height:1.7}
+.spaces{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;margin-bottom:32px}
+.space-card{text-align:left;background:white;border:1px solid var(--line);border-radius:17px;padding:25px;display:flex;align-items:center;gap:18px;width:100%;color:var(--ink);transition:box-shadow .15s,transform .15s}
+button.space-card:hover{box-shadow:0 14px 35px #27538a15;transform:translateY(-2px)}
+.space-card>div:nth-child(2){flex:1;min-width:0}.space-card h3{font-size:16px;margin:0 0 10px}.space-card p{line-height:1.7;color:var(--sub);margin:0 0 9px;font-size:12px}.space-card span{font-size:11px;color:#336aa8;font-weight:700}
+.space-mark{width:56px;height:56px;flex:none;background:#e8f1ff;color:#275eaa;display:grid;place-items:center;border-radius:15px}.space-mark.neutral{background:#eef1f6;color:#7c8aa1}.space-coming{border-style:dashed}
+.crumb{display:flex;align-items:center;gap:7px;color:var(--sub);font-size:12px;margin-bottom:28px}.crumb button{color:#3265a4;background:none;border:0;padding:0;font-weight:700}
+.quick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:27px}.quick-grid button{text-align:left;background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px;display:flex;align-items:flex-start;flex-direction:column;gap:11px;color:var(--ink)}.quick-grid svg{color:#2b63b0}.quick-grid button:hover{border-color:#9dbbe7}.quick-grid span{font-size:11px;color:var(--sub)}
+.lesson-card{padding:17px 0;border-top:1px solid var(--line);display:flex;gap:15px;align-items:center;justify-content:space-between}.lesson-card-main{display:flex;gap:12px;align-items:center;min-width:0}.lesson-card-main svg{flex:none;color:#3471b9}.lesson-card-main b,.lesson-card-main small{display:block;overflow-wrap:anywhere}.lesson-card-main small{color:var(--sub);font-size:11px;margin-top:7px}.lesson-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.primary{background:#285fb4;border-color:#285fb4}.primary:hover:not(:disabled){background:#1c4a94}
+.outline{color:#285fb4;border-color:#bcd0ec}.outline:hover{background:#f0f6ff}
+.generator{background:#f6f9ff}.generator input,.generator select,.login-card input{outline-color:#4c85cc}
+.choice.chosen{border-color:#729cd2;background:#f0f6ff}.choice input{accent-color:#2862ad}
+.review-status{display:flex;align-items:center;gap:10px;color:#5277a8;background:#f0f6ff;padding:13px 15px;border-radius:11px;margin-top:18px;line-height:1.6}
+.review-session{margin-top:25px}.review-session h3{margin:0 0 15px}.review-finished{padding:18px;background:#edf8f1;color:#27724e;border-radius:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.confidence{display:flex;align-items:center;gap:10px}.confidence select{padding:10px;border:1px solid var(--line);border-radius:8px}
+.login-wrap{background:radial-gradient(circle at top left,#e2edff,transparent 42%),#f7f9fd}.login-card h1 em{color:#2b6fbd}
+@media(max-width:980px){.spaces{grid-template-columns:1fr}.lesson-card{align-items:flex-start;flex-direction:column}.lesson-actions{justify-content:flex-start}}
+@media(max-width:700px){.sidebar .logo{display:flex}.sidebar .nav-title,.sidebar .workspace-caption,.sidebar .side-bottom{display:none}.sidebar{padding:12px}.sidebar nav{overflow-x:auto}.sidebar>.nav{padding:12px}.hero{padding:25px}.hero h1{font-size:24px}.quick-grid{grid-template-columns:1fr}.space-card{padding:17px}.space-mark{width:44px;height:44px}.lesson-actions{width:100%}.lesson-actions .outline{flex:1}}
+
+.confidence-per-question{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;font-size:11px;color:var(--sub)}.confidence-per-question button{padding:7px 11px;border-radius:8px;background:#fff;border:1px solid var(--line);color:var(--sub);font-size:11px}.confidence-per-question button.selected{background:#e9f2ff;border-color:#85aee6;color:#245a9d;font-weight:700}
+.switch-auth{border:0;background:none;color:#2863b1;text-align:center;font-weight:700;font-size:12px;padding:7px}.switch-auth:hover{text-decoration:underline}
