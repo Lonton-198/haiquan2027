@@ -34,7 +34,7 @@ export function isSupportedQuote(quote: string, source: string) {
 
 export async function jsonAI<T>(system: string, prompt: string, schema: z.ZodType<T>): Promise<T> {
   if (!process.env.OPENAI_API_KEY) throw new Error('Chưa cấu hình OPENAI_API_KEY.');
-  const isQuiz = schema === quizSchema;
+  const isQuiz = Object.is(schema, quizSchema);
   const response = await client.chat.completions.parse({
     model,
     messages: [
