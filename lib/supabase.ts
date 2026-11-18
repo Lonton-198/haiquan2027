@@ -5,7 +5,7 @@ export async function serverDb() {
   return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
     cookies: {
       getAll() { return store.getAll(); },
-      setAll(items) {
+      setAll(items: { name: string; value: string; options?: Record<string, any> }[]) {
         try { items.forEach(({name, value, options}) => store.set(name, value, options)); }
         catch { /* Not allowed to modify cookies in a Server Component. */ }
       }
