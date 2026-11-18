@@ -1,6 +1,6 @@
 "use client";
 import {useEffect,useState,useRef} from 'react';
-import {browserDb} from '@/lib/supabase';
+import {browserDb} from '@/lib/supabase-browser';
 import {BookOpen,FileUp,Layers,GraduationCap,ChartNoAxesCombined,LogOut,FileText,Plus,LoaderCircle,ArrowLeft,CheckCircle2,XCircle,Clock,ShieldCheck} from 'lucide-react';
 type Doc={id:string;title:string;filename:string;created_at:string};
 type Lesson={id:string;topic:string;content:{title:string;summary:string;key_points:string[];pitfalls:string[];cases:string[]};created_at:string};
