@@ -1,6 +1,6 @@
 "use client";
 import {useState} from 'react';
-import {browserDb} from '@/lib/supabase';
+import {browserDb} from '@/lib/supabase-browser';
 import {BookOpen,LockKeyhole} from 'lucide-react';
 export default function Login(){const [email,E]=useState(''),[password,P]=useState(''),[loading,L]=useState(false),[message,M]=useState('');
  async function login(e:React.FormEvent){e.preventDefault();L(true);M('');const {error}=await browserDb().auth.signInWithPassword({email,password});L(false);if(error)M('Đăng nhập thất bại: '+error.message);else location.href='/dashboard'}
