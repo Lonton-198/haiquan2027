@@ -1,0 +1,26 @@
+{
+  "format": "lonton-quiz-v1",
+  "title": "Đề tổng hợp – Mẫu kiểm thử (không có giá trị ôn thi)",
+  "kind": "comprehensive",
+  "questions": [
+    {
+      "stem": "Đây là câu hỏi MẪU để kiểm tra chức năng nhập đề; không dùng để đánh giá kiến thức pháp luật.",
+      "choices": [
+        "Phương án mẫu A, nội dung cần thay bằng kiến thức thật",
+        "Phương án mẫu B, nội dung cần thay bằng kiến thức thật",
+        "Phương án mẫu C, nội dung cần thay bằng kiến thức thật",
+        "Phương án mẫu D, nội dung cần thay bằng kiến thức thật"
+      ],
+      "answer": "B",
+      "explanation": "Đây chỉ là lời giải mẫu để thử nghiệm giao diện, không phải căn cứ pháp luật.",
+      "choice_explanations": [
+        "Giải thích phương án A.",
+        "Giải thích phương án B.",
+        "Giải thích phương án C.",
+        "Giải thích phương án D."
+      ],
+      "source_quote": "Mẫu kiểm thử: thay bằng trích dẫn nguồn có kiểm chứng.",
+      "difficulty": "rất khó"
+    }
+  ]
+}
