@@ -6,7 +6,8 @@ export async function POST(req:NextRequest){
  try{
  const {db,user}=await requireUser();const {quizId,answers,seconds}=await req.json();
  if(typeof quizId!=='string'||!Array.isArray(answers))throw new Error('Dữ liệu bài làm không hợp lệ');
- const {data:quiz,error}=await db.from('quizzes').select('id,questions').eq('id',quizId).eq('user_id',user.id).single();if(error||!quiz)throw new Error('Không tìm thấy đề thi');
+ const {data:quiz,error}=await db.from('quizzes').select('id,title,questions').eq('id',quizId).eq('user_id',user.id).single();if(error||!quiz)throw new Error('Không tìm thấy đề thi');
+ if((quiz.title as string).startsWith('⏳ [')) throw new Error('Đề vẫn đang tạo, hãy tạo đủ câu trước khi nộp.');
  const parsed=quizSchema.parse({questions:quiz.questions});
  if(answers.length!==parsed.questions.length||answers.some(a=>a!==null&&(!Number.isInteger(a)||a<0||a>3)))throw new Error('Đáp án không hợp lệ');
  const correct=parsed.questions.reduce((s,q,i)=>s+(answers[i]===q.answer?1:0),0);

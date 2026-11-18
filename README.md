@@ -1,57 +1,38 @@
-# Hải Quan 2027 – Website ôn thi cá nhân (online)
+# Hải Quan 2027 Online — v0.3
 
-Bản mã nguồn v0.2: Next.js + Supabase (Auth, Postgres, Storage) + OpenAI API.
+## Tính năng
+- Upload DOCX / PDF có chữ vào Supabase Storage (theo tài khoản).
+- **Bài học = đọc lại tài liệu:** PDF mở trực tiếp trong iframe từ signed URL 10 phút. DOCX hiển thị toàn bộ văn bản đã trích xuất và có liên kết tải bản gốc; các bảng, ảnh, định dạng Word chỉ được đảm bảo khi mở file gốc. Không dùng AI cho tính năng đọc.
+- **Đề vận dụng rất cao:** chọn 10/20/30/40/60/100 câu. AI tạo theo các nhóm tối đa 6 câu, lưu dần vào **cùng một quiz** trong Supabase. Hiển thị tiến độ, có nút **Tiếp tục tạo** nếu bị gián đoạn. Không thể làm bài trước khi tạo xong.
+- Đề đã hoàn thành được lưu để làm lại không gọi AI; mỗi lần nộp được lưu vào `attempts`.
+- Lời giải 4 đáp án và trích dẫn nguyên văn được đối chiếu với văn bản nguồn ở mức kiểm tra chuỗi. Chưa bảo đảm suy luận pháp lý đúng; cần rà soát thủ công.
 
-## Đã có
-- Đăng nhập bằng email/mật khẩu (không có nút đăng ký công khai).
-- Tải PDF có text / DOCX tối đa 10 MB, trích xuất và lưu lên Supabase Storage riêng tư.
-- Tạo bài học AI theo chủ đề từ tài liệu, lưu trong Postgres.
-- Tạo đề khó/rất khó (5–20 câu/bộ), 4 lựa chọn; loại câu không có trích dẫn khớp chính xác nội dung tài liệu.
-- Làm bài, chấm điểm **trên máy chủ**, giải thích từng phương án, lưu lịch sử thi, đồng bộ thiết bị.
-- Giao diện responsive để dùng trên Windows, MacBook, tablet, điện thoại qua trình duyệt.
+## Nâng cấp từ v0.2
+Giữ nguyên Supabase, khóa API, biến môi trường, GitHub, Vercel. **Không chạy lại `schema.sql` và không xóa bảng**.
 
-## Cài đặt (Windows / Mac)
-1. Cài Node.js LTS (Node 20+), mở Terminal trong thư mục.
-2. `npm install`
-3. Tạo tài khoản miễn phí tại https://supabase.com rồi tạo Project.
-4. Mở SQL Editor của Project, chạy nội dung `supabase/schema.sql`.
-5. Vào Authentication > Users, tạo **duy nhất tài khoản của bạn** (Add user), chọn email đã xác nhận nếu phù hợp. Tắt signups công khai tại Authentication > Providers > Email (hoặc cấu hình tương đương trong bảng điều khiển phiên bản hiện tại).
-6. Copy `.env.example` thành `.env.local`, điền `NEXT_PUBLIC_SUPABASE_URL` và `NEXT_PUBLIC_SUPABASE_ANON_KEY` từ Supabase; điền `OPENAI_API_KEY` từ https://platform.openai.com/api-keys; điền `OWNER_EMAIL` trùng email đăng nhập.
-7. `npm run dev` rồi mở http://localhost:3000. Đăng nhập và thử tải file Word/PDF.
-8. Kiểm tra `npm run lint` và `npm run build`.
+Dùng file `haiquan2027-v03-changed-files.zip` để cập nhật đúng **các đường dẫn gốc** trong GitHub (không tạo thư mục lồng). Khi commit vào `main`, Vercel tự build lại.
 
-## Đưa website lên mạng để đồng bộ Mac / Windows
-1. Đưa thư mục này lên **GitHub repo private**. TUYỆT ĐỐI không commit `.env.local`.
-2. Tại https://vercel.com, chọn New Project > Import repo GitHub.
-3. Trong Project Settings > Environment Variables, thêm 5 biến theo `.env.example` (không thêm file .env.local).
-4. Deploy; Vercel tạo URL dạng `https://ten-du-an.vercel.app`.
-5. Trên cả Mac và Windows, mở URL này rồi đăng nhập **cùng email**. Tài liệu, bài học, đề và kết quả nằm trong Supabase nên được đồng bộ.
-6. Ở Supabase Auth > URL Configuration, đặt Site URL bằng URL của website đã deploy. Nếu bật email xác nhận/khôi phục mật khẩu, cấu hình các Redirect URLs tương ứng.
+### Các file thay đổi
+- `app/dashboard/page.tsx`: xem tài liệu; chọn đề 60/100; tiến độ/tạo tiếp.
+- `app/api/document/route.ts`: lấy signed URL file nguyên gốc và phần chữ theo quyền đăng nhập.
+- `app/api/generate-quiz/route.ts`: tạo đề theo nhóm, xác minh trích dẫn, lưu đề dở và hoàn thành.
+- `app/api/submit/route.ts`: chỉ cho nộp đề hoàn tất.
+- `app/globals.css`: giao diện đọc tài liệu và thanh tiến độ.
+- `lib/ai.ts`: cho phép output dài hơn.
+- `lib/supabase.ts`, `lib/supabase-browser.ts`: sửa phân tách server/client và quyền người dùng theo tài khoản.
+- `app/login/page.tsx`: sửa hướng dẫn đăng nhập.
 
-## Lưu ý thực tế
-- Chưa hỗ trợ file `.doc` cũ, PDF scan ảnh, OCR, trích xuất sơ đồ/bảng phức tạp.
-- Tài liệu dài: AI hiện chỉ lấy **30.000 ký tự đầu** cho bài học và **45.000 ký tự đầu** cho đề; cần nâng cấp tìm kiếm theo phần/chunk trước khi dùng tài liệu rất dài.
-- Sinh tối đa 20 câu/lượt để giảm nguy cơ timeout và lỗi nội dung; có thể tạo nhiều bộ 20 câu.
-- Trích dẫn `source_quote` được kiểm tra khớp nguyên văn (sau chuẩn hóa khoảng trắng), nhưng **không đủ để đảm bảo kết luận pháp lý đúng**. Phải đối chiếu hiệu lực văn bản và kiểm tra lại những câu quan trọng.
-- Đây là MVP; chưa kiểm thử tích hợp đầy đủ với Supabase, OpenAI, Vercel thực tế; chưa có kiểm tra cập nhật/hiệu lực pháp luật, OCR, versioning tài liệu hoặc dashboard phân loại kiến thức yếu.
-- Nếu AI gặp lỗi trích xuất, file upload có thể bị chặn; hãy dùng file DOCX/PDF dạng chữ có thể copy.
-- Giới hạn tốc độ, chi phí AI, độ dài tài liệu, phân trang và công cụ quản trị chưa được harden cho nhiều người. Bản này thiết kế cho 1 người dùng.
-- Không đưa API key vào mã frontend, repo GitHub hoặc chat công khai. Key OpenAI chỉ được sử dụng trong các API route phía server.
-- Gói ChatGPT Plus không bao gồm chi phí OpenAI API; Supabase/Vercel cũng có giới hạn gói miễn phí.
+### Cấu hình môi trường trên Vercel
+`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `OPENAI_API_KEY`, `OPENAI_MODEL`.
+`OWNER_EMAIL` có thể giữ lại để tham khảo nhưng phiên bản này **không hạn chế đăng nhập theo email đó**: đăng nhập được quản lý bởi Supabase Auth và dữ liệu được phân quyền bằng RLS. Nếu muốn cho người dùng đăng ký trực tiếp, cần bổ sung giao diện đăng ký và cấu hình email confirmation trong Supabase (chưa có ở bản này).
 
-## Cấu trúc
-- `app/dashboard/page.tsx`: giao diện và tương tác.
-- `app/login/page.tsx`: đăng nhập.
-- `app/api/upload`: upload + trích xuất tài liệu.
-- `app/api/generate-lesson`, `generate-quiz`: tạo bài và đề AI.
-- `app/api/submit`: chấm điểm server và lưu lịch sử.
-- `lib/ai.ts`: định dạng dữ liệu AI, kiểm tra trích dẫn.
-- `lib/supabase.ts`: Supabase client, kiểm tra người dùng.
-- `supabase/schema.sql`: bảng dữ liệu + Row Level Security + bucket riêng tư.
+### Hạn chế
+- PDF scan không có chữ chưa được OCR.
+- DOCX xem phần chữ; mở bản Word gốc để giữ bảng/ảnh/định dạng.
+- Sinh 60–100 câu mất nhiều yêu cầu API, có thể tốn phí và thời gian. Nếu có lỗi AI hoặc vượt giới hạn, nút 'Tiếp tục tạo' sẽ thử sinh phần còn lại, không xóa câu đã lưu.
+- Các câu được kiểm tra trích dẫn dạng chuỗi, **không được kiểm chứng tự động đầy đủ về hiệu lực, logic pháp luật và độ khó thực tế**.
+- Không được làm bài thi dở tự lưu.
+- Chưa kiểm thử build production thực tế trong môi trường này vì không cài đủ dependency từ npm.
 
-## Những cải tiến ưu tiên
-1. Tách văn bản theo điều/khoản/mục; lưu chunk và retrieval theo nội dung liên quan; trích dẫn định vị đến trang/điều.
-2. Chấm chất lượng câu hỏi và kiểm chứng căn cứ pháp lý thứ hai độc lập.
-3. Thi thử 60 câu bằng cách ghép 3 bộ đã kiểm tra, đảo câu/đáp án.
-4. Phát hiện câu sai thường gặp, spaced repetition, tạo đề nhắm điểm yếu.
-5. Thanh toán/giới hạn usage nếu tương lai có nhiều người dùng (hiện không cần).
+## Chạy local
+`npm install` rồi `npm run dev`; kiểm tra sản phẩm trên Vercel với các biến như trên.

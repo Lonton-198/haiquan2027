@@ -7,7 +7,7 @@ export const questionSchema=z.object({stem:z.string(),choices:z.tuple([z.string(
 export const quizSchema=z.object({questions:z.array(questionSchema)});
 export async function jsonAI<T>(system:string,prompt:string,schema:z.ZodType<T>):Promise<T> {
  if(!process.env.OPENAI_API_KEY)throw new Error('Chưa cấu hình OPENAI_API_KEY.');
- const response=await client.chat.completions.create({model,messages:[{role:'system',content:system},{role:'user',content:prompt}],response_format:{type:'json_object'}});
+ const response=await client.chat.completions.create({model,messages:[{role:'system',content:system},{role:'user',content:prompt}],response_format:{type:'json_object'},max_completion_tokens:13000});
  const content=response.choices[0]?.message?.content;
  if(!content)throw new Error('AI không trả lời.');
  try {return schema.parse(JSON.parse(content))} catch {throw new Error('AI trả dữ liệu chưa hợp lệ. Hãy thử lại.')}
