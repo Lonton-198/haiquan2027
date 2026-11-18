@@ -103,3 +103,10 @@ body{background:var(--bg)}
 @media(max-width:1000px){.achievement-strip>div{flex-wrap:wrap}.achievement-strip span{width:100%}.daily-banner{flex-wrap:wrap}}
 @media(max-width:700px){.hero-v07{padding:23px 20px;min-height:300px;align-items:flex-start}.hero-copy{max-width:100%}.hero-v07 p{max-width:80%;font-size:11px}.hero-mascot{width:130px;right:-12px;bottom:-22px}.hero-cta{font-size:11px;padding:10px}.achievement-strip{gap:7px}.achievement-strip>div{padding:12px 8px;display:flex;flex-direction:column;text-align:center;gap:5px}.achievement-strip b{font-size:13px}.achievement-strip span{font-size:9px}.daily-banner{padding:12px;gap:8px}.daily-icon{width:58px;height:58px}.daily-banner h3{font-size:13px}.daily-banner>.outline{width:100%;text-align:center}.login-v07{grid-template-columns:1fr;gap:15px;padding:25px 15px}.login-showcase .login-mascot{width:145px;height:145px}.login-showcase h2{font-size:18px;margin:5px}.login-showcase p{display:none}.palette-popover{right:-45px;width:min(265px,90vw)}.question-nav button{min-width:31px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* v0.7.1 - removable source documents */
+.document-item-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:auto}
+.delete-document{border:1px solid #e9bdba;color:#a23f3a;background:#fff8f7;border-radius:10px;padding:10px 13px;font-weight:700;cursor:pointer;font-size:12px}
+.delete-document:hover:not(:disabled){background:#fbe9e7}
+.delete-document:disabled{opacity:.5;cursor:not-allowed}
+@media(max-width:700px){.document-item-actions{width:100%;margin-left:0}.document-item-actions button{flex:1}}

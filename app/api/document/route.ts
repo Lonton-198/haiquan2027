@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     const {db,user} = await requireUser();
     const {data:doc,error} = await db.from('documents')
       .select('id,title,filename,storage_path,extracted_text')
-      .eq('user_id',user.id).eq('id',id).single();
+      .eq('user_id',user.id).eq('id',id).is('deleted_at',null).single();
     if(error || !doc) throw new Error('Không tìm thấy tài liệu thuộc tài khoản.');
     const {data:signed,error:signError} = await db.storage.from('documents')
       .createSignedUrl(doc.storage_path,60*10);
