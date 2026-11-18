@@ -8,8 +8,17 @@ export async function serverDb() {
   return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,{
     cookies: {
       getAll() {return store.getAll()},
-      setAll(items) { try {items.forEach(({name,value,options})=>store.set(name,value,options))}catch{/* server component */} }
-    }
+      
+setAll(items: { name: string; value: string; options?: Record<string, any> }[]) {
+  try {
+    items.forEach(({ name, value, options }) =>
+      store.set(name, value, options)
+    );
+  } catch {
+    /* server component */
+  }
+}
+  
   });
 }
 export async function requireUser() {
