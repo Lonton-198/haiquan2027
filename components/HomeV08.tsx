@@ -19,7 +19,7 @@ export default function HomeV08({name,docCount,quizCount,attempts,reviewRows,str
  return <div className="marine-home">
   <section className="marine-hero" aria-label="Chào mừng học tập"><div className="marine-sky"/><div className="marine-sun"/><div className="marine-cloud cloud-a"/><div className="marine-cloud cloud-b"/><div className="marine-harbor" aria-hidden="true"><Ship/><span className="marine-waves">〰 〰 〰 〰 〰 〰</span></div>
    <div className="marine-hero-copy"><span className="marine-kicker"><Anchor size={15}/> HỌC CÙNG LON TON · HẢI QUAN 2027</span><h1>Hôm nay mình<br/><em>học gì nào?</em> <span>⚡</span></h1><p>Chào {named}! Cùng cún lon ton chinh phục kiến thức, tích lũy từng ngày và tự tin bước vào kỳ thi Hải quan.</p><button className="marine-button" onClick={()=>onGo('overview')}>Vào góc học Hải quan <ArrowRight size={18}/></button></div>
-   <div className="marine-mascot-backdrop"/><Mascot className="marine-main-mascot" size={340}/>
+   <div className="marine-mascot-backdrop"/><Mascot className="marine-main-mascot" size={340} mood="calm"/>
    <div className="marine-hero-tag">🌊 Kiên trì mỗi ngày!</div>
   </section>
   <div className="marine-stats" aria-label="Thống kê học tập">

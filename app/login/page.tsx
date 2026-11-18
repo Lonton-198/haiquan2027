@@ -22,7 +22,7 @@ export default function Login(){
    }catch(e){M(e instanceof Error?e.message:'Có lỗi xảy ra.');}
    finally{L(false)}
  }
- return <main className="login-wrap login-v07"><div className="login-showcase"><Mascot size={300} className="login-mascot"/><span className="eyebrow">CHÀO BẠN, MÌNH LÀ LON TON!</span><h2>Cùng nhau học thêm một điều hay mỗi ngày.</h2><p>Học tập nhẹ nhàng, tiến bộ bền vững.</p></div><form className="login-card" onSubmit={submit}>
+ return <main className="login-wrap login-v07"><div className="login-showcase"><Mascot size={300} className="login-mascot" mood="happy"/><span className="eyebrow">CHÀO BẠN, MÌNH LÀ LON TON!</span><h2>Cùng nhau học thêm một điều hay mỗi ngày.</h2><p>Học tập nhẹ nhàng, tiến bộ bền vững.</p></div><form className="login-card" onSubmit={submit}>
  <div className="brand-icon"><BookOpenCheck size={30}/></div><h1>Học cùng <em>lon ton</em></h1>
  <p>Học mỗi ngày, tiến bộ từng chút. Một tài khoản cho mọi không gian học.</p>
  <label>Email<input required type="email" autoComplete="email" value={email} onChange={e=>E(e.target.value)} placeholder="email@example.com"/></label>
