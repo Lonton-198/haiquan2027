@@ -432,3 +432,51 @@ body{background:
 @media(max-width:1100px){.v2-shell .v2-hero-mascot{height:85%!important;right:0!important}.v2-shell .v2-hero p{max-width:60%}}
 @media(max-width:700px){body{background-attachment:scroll!important;background-position:center top!important}.v2-shell .sidebar::after{display:none}.v2-shell .v2-hero-mascot{height:65%!important;right:-3%!important}.v2-shell .v2-hero p{max-width:68%}.v2-shell .v2-hero{background-position:55% center!important}.v2-shell .v2-inner-banner{background-position:50% center!important}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+
+/* ===== LON TON SCENE THEMES — Ocean / Forest / City ===== */
+/* A persistent backdrop provides crossfade without navigation or page reload. */
+html[data-lonton-theme] body{background:transparent!important}
+.lonton-scene-backgrounds{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:#e5f5fa}
+.lonton-scene{position:absolute;inset:-1%;background-position:center bottom;background-size:cover;background-repeat:no-repeat;opacity:0;transition:opacity .55s cubic-bezier(.22,1,.36,1);will-change:opacity}
+.lonton-scene-ocean{background-image:linear-gradient(180deg,#ebf8fc59,#d9f3f475),url('/ocean-coast-art.jpg');opacity:1}
+.lonton-scene-forest{background-image:linear-gradient(180deg,#eff9f075,#d9efdf89),url('/theme-forest.jpg')}
+.lonton-scene-city{background-image:linear-gradient(180deg,#ebedff61,#e2e8f896),url('/theme-city.svg')}
+html[data-lonton-theme='forest'] .lonton-scene-ocean,html[data-lonton-theme='city'] .lonton-scene-ocean{opacity:0}
+html[data-lonton-theme='forest'] .lonton-scene-forest,html[data-lonton-theme='city'] .lonton-scene-city{opacity:1}
+.shell,.login-wrap{position:relative;z-index:1}
+.v2-shell .color-settings{position:relative;z-index:100}
+.v2-shell .palette-popover{z-index:1000;max-height:min(80vh,650px);overflow-y:auto;width:min(340px,calc(100vw - 24px))}
+.lonton-theme-options{display:grid;gap:7px;margin:13px 0}
+.lonton-theme-choice{width:100%;display:flex;align-items:center;gap:11px;padding:7px;border:1px solid #cee3ed;border-radius:13px;background:rgba(255,255,255,.8);text-align:left;color:#173b55;transition:background .2s,transform .2s,border-color .2s,box-shadow .2s}
+.lonton-theme-choice:hover{background:#fff;transform:translateY(-1px);box-shadow:0 5px 13px #0f567023}
+.lonton-theme-choice.is-selected{border-color:var(--accent,#2864b4);background:#e9f7ff}
+.lonton-theme-thumbnail{width:67px;height:49px;flex:0 0 67px;background-size:cover;background-position:center;border-radius:10px;border:1px solid #ffffffb9}
+.lonton-theme-choice-copy{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
+.lonton-theme-choice-copy b{font-size:12px;color:inherit}.lonton-theme-choice-copy small{font-size:10px;color:#62829a}
+.lonton-theme-choice.is-selected>svg{color:var(--accent,#2864b4)}
+.lonton-theme-divider{height:1px;background:#d7e6ee;margin:15px 0}
+/* Palettes apply to the entire workspace rather than just the image. */
+html[data-lonton-theme='forest']{--lonton-primary:#236a53;--lonton-soft:#e6f6e7;--lonton-ink:#204934;--lonton-tint:rgba(232,247,231,.87)}
+html[data-lonton-theme='city']{--lonton-primary:#5b56a8;--lonton-soft:#eeedfd;--lonton-ink:#2d315b;--lonton-tint:rgba(238,238,255,.86)}
+html:not([data-lonton-theme]),html[data-lonton-theme='ocean']{--lonton-primary:#147fc0;--lonton-soft:#e2f5ff;--lonton-ink:#153f64;--lonton-tint:rgba(235,249,254,.87)}
+html[data-lonton-theme] .v2-shell .sidebar{background:linear-gradient(180deg,rgba(255,255,255,.92),var(--lonton-tint))!important;transition:background-color .35s ease}
+html[data-lonton-theme] .v2-shell .top{background:var(--lonton-tint)!important;transition:background .35s ease}
+html[data-lonton-theme] .v2-shell .nav.active,html[data-lonton-theme] .v2-shell .nav:hover{background:linear-gradient(90deg,var(--lonton-primary),color-mix(in srgb,var(--lonton-primary),#86d8ec 33%))!important;color:#fff!important}
+html[data-lonton-theme] .v2-shell :is(.v2-kicker,.v2-overline){color:var(--lonton-primary)!important}
+html[data-lonton-theme] .v2-shell :is(.v2-headline h1,.v2-study-rail h2,.v2-plan-rail h2){color:var(--lonton-ink)!important}
+html[data-lonton-theme] .v2-shell :is(.v2-space-selected,.v2-unit:hover){border-color:color-mix(in srgb,var(--lonton-primary),white 66%)!important}
+html[data-lonton-theme] .v2-shell .v2-hero{transition:background .35s ease,box-shadow .3s ease}
+html[data-lonton-theme='forest'] .v2-shell .v2-hero{background:linear-gradient(100deg,rgba(20,83,61,.97) 0%,rgba(27,113,77,.86) 42%,rgba(32,130,85,.16) 100%),url('/theme-forest.jpg') center center/cover no-repeat!important}
+html[data-lonton-theme='city'] .v2-shell .v2-hero{background:linear-gradient(100deg,rgba(42,44,105,.97) 0%,rgba(73,65,138,.85) 42%,rgba(90,62,151,.12) 100%),url('/theme-city.svg') center center/cover no-repeat!important}
+html[data-lonton-theme='forest'] .v2-shell .sidebar::after{background-image:url('/theme-forest.jpg')!important;opacity:.36}
+html[data-lonton-theme='city'] .v2-shell .sidebar::after{background-image:url('/theme-city.svg')!important;opacity:.36}
+html[data-lonton-theme='forest'] .v2-shell .v2-inner-banner{background:linear-gradient(95deg,rgba(245,255,247,.95),rgba(228,246,233,.76) 60%,rgba(218,245,224,.3)),url('/theme-forest.jpg') center/cover no-repeat!important}
+html[data-lonton-theme='city'] .v2-shell .v2-inner-banner{background:linear-gradient(95deg,rgba(250,250,255,.96),rgba(239,238,255,.8) 60%,rgba(220,216,253,.3)),url('/theme-city.svg') center/cover no-repeat!important}
+html[data-lonton-theme='forest'] .v2-inner-banner-coast{background-image:url('/theme-forest.jpg')!important}
+html[data-lonton-theme='city'] .v2-inner-banner-coast{background-image:url('/theme-city.svg')!important}
+html[data-lonton-theme] .v2-shell :is(.v2-glass,.panel,.stat,.v2-content-card){transition:background-color .35s ease,border-color .35s ease,box-shadow .28s ease,transform .2s ease}
+html[data-lonton-theme='forest'] .v2-shell :is(.v2-study-rail,.v2-plan-rail){background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(229,248,232,.79))!important}
+html[data-lonton-theme='city'] .v2-shell :is(.v2-study-rail,.v2-plan-rail){background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(236,233,251,.81))!important}
+@media (max-width:700px){.lonton-scene{background-position:42% top}.v2-shell .palette-popover{position:fixed;top:65px;right:10px;max-width:calc(100vw - 20px)}}
+@media(prefers-reduced-motion:reduce){.lonton-scene,.lonton-theme-choice{transition:none!important}}
