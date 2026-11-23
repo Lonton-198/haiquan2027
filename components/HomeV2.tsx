@@ -1,16 +1,17 @@
 'use client';
 import {useMemo,useState} from 'react';
 import Mascot from '@/components/Mascot';
+import type {LonTonTheme} from '@/components/ThemeBackdrop';
 import type {StudyUnit} from '@/components/StudyLibrary';
 import {Anchor,ArrowRight,BookOpen,CalendarDays,CheckCircle2,ChevronRight,Clock3,Compass,Flame,GraduationCap,Landmark,Medal,RotateCcw,Search,Ship,Target,TrendingUp, Waves, Sparkles, FileText, Layers3, ShieldCheck} from 'lucide-react';
 
 type Entry={created_at:string;correct:number;total:number};
 type Review={due_at:string};
 type Section='overview'|'documents'|'quizzes'|'review'|'results';
-type Props={name:string;units:StudyUnit[];docCount:number;quizCount:number;attempts:Entry[];reviewRows:Review[];streak:number;percent:number;onGo:(section:Section)=>void;onOpenUnit:(unitId:string)=>void};
+type Props={theme?:LonTonTheme;name:string;units:StudyUnit[];docCount:number;quizCount:number;attempts:Entry[];reviewRows:Review[];streak:number;percent:number;onGo:(section:Section)=>void;onOpenUnit:(unitId:string)=>void};
 const weekdays=['CN','T2','T3','T4','T5','T6','T7'];
 const dayKey=(date:Date)=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
-export default function HomeV2({name,units,docCount,quizCount,attempts,reviewRows,streak,percent,onGo,onOpenUnit}:Props){
+export default function HomeV2({theme='ocean',name,units,docCount,quizCount,attempts,reviewRows,streak,percent,onGo,onOpenUnit}:Props){
  const [search,setSearch]=useState('');const [mode,setMode]=useState<'week'|'timeline'>('timeline');
  const today=useMemo(()=>new Date(),[]);const dateNow=today.getTime();
  const due=reviewRows.filter(r=>new Date(r.due_at).getTime()<=dateNow).length;
@@ -19,7 +20,7 @@ export default function HomeV2({name,units,docCount,quizCount,attempts,reviewRow
  const maxActivity=Math.max(1,...activity.map(a=>a.count));const filtered=units.filter(u=>u.title.toLowerCase().includes(search.trim().toLowerCase()));
  const firstName=name.trim().split(/\s+/)[0]||'bạn';
  return <div className="v2-home">
-  <div className="v2-headline"><div><span className="v2-kicker"><Waves size={16}/> OCEAN WORKSPACE · HỌC CÙNG LON TON</span><h1>Chào {firstName}, hôm nay học gì? <span>✦</span></h1><p>Mỗi ngày một bước tiến. Cùng lon ton chinh phục kiến thức và kỳ thi Hải quan!</p></div><div className="v2-headline-chip"><ShieldCheck size={17}/> Không gian học của bạn</div></div>
+  <div className="v2-headline"><div><span className="v2-kicker"><Waves size={16}/> {theme==='ocean'?'OCEAN':theme==='forest'?'FOREST':'CITY'} WORKSPACE · HỌC CÙNG LON TON</span><h1>Chào {firstName}, hôm nay học gì? <span>✦</span></h1><p>Mỗi ngày một bước tiến. Cùng lon ton chinh phục kiến thức và kỳ thi Hải quan!</p></div><div className="v2-headline-chip"><ShieldCheck size={17}/> Không gian học của bạn</div></div>
   <div className="v2-three-columns">
    <aside className="v2-study-rail v2-glass"><div className="v2-section-title"><div><span className="v2-overline">THƯ VIỆN HỌC TẬP</span><h2>Không gian học</h2></div><Compass size={24}/></div>
     <button className="v2-space-selected" onClick={()=>onGo('overview')}><span className="v2-space-icon"><Landmark size={21}/></span><span><b>Ôn thi Hải quan 2027</b><small>{units.length} bài học · {quizCount} bộ đề</small></span><ChevronRight size={17}/></button>
