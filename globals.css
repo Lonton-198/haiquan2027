@@ -221,3 +221,107 @@ body{background:radial-gradient(ellipse at 77% 0%,#e1f6ff 0%,transparent 42%),#f
 @media(max-width:1420px){.ow-layout{grid-template-columns:minmax(175px,.8fr) minmax(300px,1.5fr)}.ow-planner{grid-column:1 / -1;min-height:unset}.ow-timeline{grid-template-columns:repeat(2,1fr);gap:0 14px}.ow-day{min-height:75px}.ow-library{min-height:680px}}
 @media(max-width:900px){.ow-layout{grid-template-columns:1fr}.ow-library{min-height:unset;padding-bottom:118px}.ow-unit-list{max-height:250px}.ow-planner{grid-column:auto}.ow-timeline{grid-template-columns:1fr}.ow-study-layout{grid-template-columns:1fr}.ow-study-index{position:static;max-height:240px}.ow-study-index-list{display:grid;grid-template-columns:repeat(2,1fr)}.ow-main-column{order:0}}
 @media(max-width:520px){.ow-heading{align-items:flex-start}.ow-heading-mascot{display:none}.ow-banner{padding:22px;min-height:235px}.ow-banner-copy{max-width:73%}.ow-banner h2{font-size:25px}.ow-banner-dog{right:0;height:165px;max-width:31%}.ow-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.ow-study-index-list{grid-template-columns:1fr}}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v1.2 OCEAN WORKSPACE MOTION — visual system across every screen.
+   Additive CSS only: does not alter data, SQL, quiz generation or review logic.
+   The atmosphere/hero are separate decorative SVGs, not screenshots.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root{--ink:#173b5b;--sub:#5d7d92;--line:#d8eaf4;--bg:#edf8ff;--motion-fast:140ms;--motion-normal:250ms;--motion-slow:380ms;--motion-ease:cubic-bezier(.22,1,.36,1)}
+html{scroll-behavior:smooth}
+body{color:var(--ink);background-color:#e7f7ff;background-image:linear-gradient(110deg,#eaf8ff9c,#ffffff70 48%,#ddf6f2a3),url('/ocean-atmosphere.svg');background-position:center center;background-attachment:fixed;background-size:cover}
+::selection{background:#a5dcf3;color:#103c63}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--accent,#2864b4) 68%,white);outline-offset:3px}
+.shell{background:transparent;min-height:100vh}
+.main{background:transparent}
+.sidebar{background:linear-gradient(160deg,#f7fcffd9,#e4f6f1c9);backdrop-filter:blur(22px) saturate(1.25);-webkit-backdrop-filter:blur(22px) saturate(1.25);border-right:1px solid #ffffffd9;box-shadow:8px 0 35px #2c799513;padding:24px 15px;z-index:5;width:265px}
+.sidebar::after{content:'';position:absolute;inset:auto 0 0;height:190px;pointer-events:none;background:linear-gradient(0deg,#d0ecdb7a,transparent),url('/ocean-atmosphere.svg') left bottom/900px auto no-repeat;opacity:.55;z-index:-1}
+.logo-button{padding:9px 5px!important;border-radius:17px;transition:transform var(--motion-normal) var(--motion-ease)}.logo-button:hover{transform:translateY(-2px)}
+.logo .logo-mark{background:linear-gradient(145deg,#e3f7ff,#d0eff9)!important;border:1px solid #ffffffd9;box-shadow:0 7px 20px #438eb11c;border-radius:16px}
+.logo b{color:var(--accent,#2864b4)}.logo small{color:#648b9b}
+.nav-title{margin:36px 12px 13px;color:#7d9aaa}.workspace-caption{background:#ffffff91;border:1px solid #ffffffad;border-radius:13px;box-shadow:0 4px 16px #4d99b213}
+.nav{position:relative;border-radius:13px;color:#40647f;margin:4px 0;padding:13px 15px;transition:background-color var(--motion-normal) ease,color var(--motion-normal) ease,transform var(--motion-normal) var(--motion-ease),box-shadow var(--motion-normal) ease}
+.nav svg{flex-shrink:0;transition:transform var(--motion-normal) var(--motion-ease)}
+.nav:hover{background:#ffffffe6;color:var(--accent,#2864b4);transform:translateX(4px);box-shadow:0 6px 18px #2867a113}
+.nav:hover svg{transform:scale(1.11)}
+.nav.active{background:linear-gradient(100deg,color-mix(in srgb,var(--accent,#2864b4) 14%,white),#ffffffba);color:var(--accent,#2864b4);box-shadow:inset 3px 0 0 var(--accent,#2864b4),0 4px 18px #3e86ae13}
+.side-bottom{border-top:1px solid #ffffffa3;color:#2d637d}.side-bottom span{color:#688ba0}
+.top{height:78px;padding:0 3.5%;background:#ffffffa3;border-bottom:1px solid #ffffffcf;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);position:sticky;top:0;z-index:9;box-shadow:0 3px 19px #6ca6c512}
+.top-sub{color:#557d94;font-weight:650}
+.user button,.palette-trigger,.profile-trigger{border:1px solid #ffffffc7!important;background:#ffffffb8!important;border-radius:13px!important;box-shadow:0 5px 20px #336b8d10;transition:transform var(--motion-fast) ease,background-color var(--motion-normal) ease,box-shadow var(--motion-normal) ease!important}
+.user button:hover{background:#fff!important;box-shadow:0 9px 22px #418eae22;transform:translateY(-2px)}
+.body{max-width:1640px;padding:30px 3.5% 45px}.body h1{color:#163b5c}.body>.eyebrow,.eyebrow{color:var(--accent,#2864b4)}.muted,.footnote{color:#66869a}
+.crumb{color:#668ca1}.crumb button{color:var(--accent,#2864b4)}
+.motion-page{animation:owPageAppear .38s var(--motion-ease) both}
+@keyframes owPageAppear{from{opacity:.35;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}
+/* Frosted surfaces: one consistent system for home, library, AI, exams, review, statistics */
+.panel,.ow-card,.ow-library,.ow-planner,.marine-card,.stat,.space-card,.quick-grid>button,.lesson,.login-card,.profile-card,.study-section,.ow-study-index,.ow-metrics button,.ow-study-detail,.ow-achievement{border:1px solid #ffffffed!important;background:linear-gradient(145deg,#fffffff0,#eef9ffdc)!important;box-shadow:0 10px 30px #2e78971a,0 1px 3px #83c4d329!important;backdrop-filter:blur(17px) saturate(1.18);-webkit-backdrop-filter:blur(17px) saturate(1.18)}
+.panel{border-radius:22px;padding:26px;margin-bottom:21px}.stat{border-radius:18px;padding:21px}.ow-card{border-radius:23px;padding:20px}.study-section{border-radius:19px;padding:18px}.ow-study-index{border-radius:21px}.ow-planner,.ow-library{border-radius:23px}
+.stats{gap:14px}.stat b{color:#163d62}.stat span,.study-entry small{color:#6386a0}
+.section-head h2,.ow-card-head h2{color:#173c5b}.section-head p{color:#608096}
+/* Layered visual atmosphere across each page, not just the homepage */
+.ow-home{z-index:0}.ow-home::before{background:transparent!important;inset:0!important}
+.ow-heading{border:1px solid #ffffffc4;border-radius:20px;background:#ffffffe0;padding:18px 23px;margin-bottom:15px;box-shadow:0 8px 24px #3b8fa01a}
+.ow-heading h1{font-size:clamp(23px,2.7vw,36px);color:#193e65}
+.ow-heading p{color:#5c87a0}.ow-overline{color:var(--accent,#2864b4)}
+.ow-layout{gap:17px}
+.ow-library{overflow:hidden;position:relative}.ow-library::before{content:'';position:absolute;inset:auto 0 0;height:150px;pointer-events:none;background:url('/ocean-atmosphere.svg') left bottom / 650px auto no-repeat;opacity:.64}
+.ow-banner{min-height:285px;box-shadow:0 12px 30px #237bac30;border:1px solid #e6fbffdd;background:linear-gradient(98deg,#0d72bbbc 0%,#219bd4a8 42%,#85dff047 100%),url('/ocean-hero.svg') center center/cover no-repeat}
+.ow-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#07528c6b,transparent 68%);pointer-events:none}
+.ow-banner-copy{z-index:2}.ow-banner h2{color:#fff;text-shadow:0 2px 14px #0052847d;font-size:clamp(29px,3vw,42px)}.ow-banner p{color:#edfaff;font-size:12px;max-width:300px;text-shadow:0 2px 8px #146ca0}
+.ow-banner button,.primary,.marine-task-cta{background:linear-gradient(110deg,var(--accent,#2864b4),#1ea2df);border:1px solid #ffffff8c;color:white;box-shadow:0 5px 0 #12528d36,0 8px 24px #196ab126;transition:transform var(--motion-fast) var(--motion-ease),box-shadow var(--motion-fast) ease,filter var(--motion-fast) ease}
+.ow-banner button{background:linear-gradient(110deg,#ffe17a,#ffc746);color:#254963;box-shadow:0 4px 0 #c98c32,0 12px 20px #143e6440}
+.ow-banner button:hover,.primary:hover:not(:disabled),.marine-task-cta:hover{transform:translateY(-2px);filter:brightness(1.045);box-shadow:0 7px 0 #12528d26,0 12px 26px #196ab139}
+.ow-banner button:hover{box-shadow:0 7px 0 #c98c32a6,0 12px 24px #143e643d}
+.ow-banner button:active,.primary:active:not(:disabled),.outline:active:not(:disabled){transform:translateY(2px) scale(.985);box-shadow:0 1px 0 #174f6f55}
+.ow-banner-dog{bottom:-1px;height:252px;right:3%;max-width:34%;z-index:3}.ow-banner-dog img{height:100%!important;max-height:100%;filter:drop-shadow(0 11px 16px #12618444)}
+.ow-banner-waves{pointer-events:none;z-index:1;opacity:.34}
+.ow-metrics{gap:10px}.ow-metrics button{border-radius:17px;transition:transform var(--motion-normal) var(--motion-ease),box-shadow var(--motion-normal) ease}.ow-metrics button:hover{background:#fff!important;transform:translateY(-4px);box-shadow:0 15px 30px #257da52c!important}.ow-metrics strong{font-size:22px}
+.ow-tasks button,.ow-unit,.ow-day,.ow-space-item,.ow-study-index-item,.ow-week-grid button,.ow-library-link,.ow-planner-footer,.study-entry,.study-file-pick,.quick-grid>button,.space-card,.lesson summary,.choice,.dropzone{transition:background-color var(--motion-normal) ease,border-color var(--motion-normal) ease,transform var(--motion-normal) var(--motion-ease),box-shadow var(--motion-normal) ease,color var(--motion-normal) ease}
+.ow-tasks button:hover,.ow-unit:hover,.ow-day:hover,.ow-space-item:hover,.ow-study-index-item:hover,.ow-week-grid button:hover,.study-entry:hover{transform:translateY(-2px);background:#ffffffee!important;box-shadow:0 8px 20px #478ca31d}
+.ow-tasks button:active,.ow-unit:active,.ow-day:active,.ow-study-index-item:active{transform:scale(.988)}
+.ow-tasks button{background:#ffffffca;border:1px solid #e5f0f8;border-radius:13px}
+.ow-unit-list{scrollbar-color:#95cadc transparent}.ow-unit-list::-webkit-scrollbar{width:6px}.ow-unit-list::-webkit-scrollbar-thumb{background:#a3d3e0;border-radius:99px}
+.ow-timeline .ow-day.first{background:linear-gradient(100deg,#d6f6ff,#ffffffad)}.ow-day-date b{color:#1b5b87}
+.ow-study-layout{gap:17px}.ow-study-index{background:linear-gradient(155deg,#f4fdffe8,#daf4f0dc)!important}.ow-study-index-item.active{background:linear-gradient(90deg,#d7efff,#fff)!important;box-shadow:inset 3px 0 0 var(--accent,#2864b4);color:#155d91}
+.ow-study-detail .study-section{background:#ffffffd8!important}.study-review,.daily-banner,.score,.explanation,.doc-reader{background:linear-gradient(110deg,#eafaffea,#f6f9ffe8)!important;border:1px solid #d2ebf5!important;box-shadow:0 7px 21px #518ead13;border-radius:19px}
+/* Secondary controls and form elements */
+.outline{border-radius:12px;background:#ffffffde;border-color:#c4e3f1;color:var(--accent,#2864b4);transition:transform var(--motion-fast) ease,background-color var(--motion-normal) ease,box-shadow var(--motion-normal) ease}
+.outline:hover:not(:disabled){background:#effaff;transform:translateY(-2px);box-shadow:0 8px 19px #2a88a11c}
+.generator{background:#eaf6ffb8;border-color:#daedf7;border-radius:18px;gap:17px}
+.generator select,.generator input,.login-card input,.study-toolbar select,.study-add-unit input,.doc-search input,.ow-search input,.profile-form input{background:#ffffffed!important;border:1px solid #cce4f2!important;border-radius:12px!important;color:#1a476c!important;transition:box-shadow var(--motion-normal) ease,border-color var(--motion-normal) ease}
+.generator select:focus,.generator input:focus,.login-card input:focus,.study-toolbar select:focus,.study-add-unit input:focus,.doc-search input:focus,.ow-search input:focus,.profile-form input:focus{border-color:var(--accent,#2864b4)!important;box-shadow:0 0 0 4px #72c9f126;outline:none}
+.choice{background:#fffefaeb;border:1px solid #d8e9f3;border-radius:14px;padding:14px 16px;position:relative}
+.choice:hover{background:#eef9ff;border-color:#80bee1;transform:translateX(3px);box-shadow:0 5px 15px #3282ac16}
+.choice.chosen{background:#e2f3ff;border-color:var(--accent,#2864b4);box-shadow:inset 3px 0 0 var(--accent,#2864b4),0 4px 14px #3487be1c}
+.choice.right{background:#dcf7e9;border-color:#51b48c;box-shadow:inset 4px 0 0 #169c73}.choice.incorrect{background:#fff0eb;border-color:#e68b7a;box-shadow:inset 4px 0 0 #dd6255}
+.question{animation:owPageAppear .3s var(--motion-ease) both;border-top-color:#d8e9f2}.explanation{border-left:4px solid #39a5c5!important}.letter{color:var(--accent,#2864b4)}
+.pill,.pill.small{background:#e7f4ff;color:#256c9a}.dropzone{background:#effbffb8;border-color:#9ad4e9;color:#317fa4}.dropzone:hover{background:#e0f7ff;transform:translateY(-2px);box-shadow:0 9px 22px #388dad20}
+.achievement-strip>div,.marine-stat,.marine-shortcut,.marine-badge-grid>div{transition:transform var(--motion-normal) var(--motion-ease),box-shadow var(--motion-normal) ease}.achievement-strip>div:hover,.marine-shortcut:hover{transform:translateY(-4px);box-shadow:0 10px 26px #388eaa21}
+.ow-bar-track div{animation:owBarGrow .6s var(--motion-ease) both;transform-origin:bottom}@keyframes owBarGrow{from{transform:scaleY(.08)}to{transform:scaleY(1)}}
+/* Login, modal and notifications share the same ocean glass aesthetics */
+.login-wrap{background:linear-gradient(100deg,#dff4ff8c,#f4fcf8bb),url('/ocean-atmosphere.svg') center/cover fixed}
+.login-showcase{background:linear-gradient(125deg,#1a88c095,#9cdbe550)!important;border:1px solid #ffffffdf!important;box-shadow:0 16px 38px #296a9023!important;backdrop-filter:blur(10px)}
+.login-card{border-radius:26px;box-shadow:0 24px 65px #296f9030!important}.login-card h1{color:#174267}.login-card h1 em{color:var(--accent,#2864b4)}
+.profile-overlay{backdrop-filter:blur(9px)}.profile-card{border-radius:23px;animation:owPageAppear .28s var(--motion-ease) both}
+.palette-popover{background:#fffffff0;border:1px solid #d4eaf4;box-shadow:0 18px 40px #25699138;backdrop-filter:blur(18px)}
+.alert{border-radius:13px}.success,.profile-success{border-radius:13px}
+/* Touch feedback and small section tab animations */
+button:focus-visible,.choice:focus-within,.study-file-pick:focus-within{outline:3px solid color-mix(in srgb,var(--accent,#2864b4) 54%,white);outline-offset:3px}
+button svg{transition:transform var(--motion-normal) var(--motion-ease)}
+.ow-library-link:hover svg:last-child,.ow-planner-footer:hover svg:last-child,.primary:hover svg:last-child{transform:translateX(3px)}
+.ow-segment button,.question-nav button,.nav,.palette-trigger{transition:background-color var(--motion-normal) ease,box-shadow var(--motion-normal) ease,color var(--motion-normal) ease,transform var(--motion-fast) ease}
+.ow-segment button.selected{background:var(--accent,#2864b4);box-shadow:0 3px 14px #2864b435}
+.question-nav button:hover{transform:translateY(-2px)}.question-nav button:active{transform:scale(.93)}
+/* Make decorative background present, but never sacrifice readable study content */
+.lesson-body,.original-text,.doc-reader,.study-upload-box,.study-entry,.score,.explanation{color:#254661}
+@media(max-width:1100px){.sidebar{width:235px}.top{padding:0 3%}.body{padding:24px 3% 35px}.ow-banner-dog{height:225px}}
+@media(max-width:900px){.ow-banner-dog{height:221px}.ow-banner-copy{max-width:72%}.ow-study-index{position:relative;top:auto}.sidebar{width:212px}}
+@media(max-width:700px){body{background-attachment:scroll}.sidebar{position:relative;height:auto;width:100%;padding:10px;background:#f2fbffe8}.sidebar::after{display:none}.top{height:62px;position:sticky;top:0}.body{padding:20px 13px 35px}.ow-heading{padding:15px}.ow-library{min-height:0}.panel{padding:18px}.nav:hover{transform:none}.ow-banner{min-height:247px}.ow-banner-dog{height:197px}.ow-banner-copy{max-width:75%}.ow-banner h2{font-size:29px}.ow-study-index{max-height:280px}}
+@media(max-width:520px){.ow-banner-dog{height:163px;max-width:36%;right:-2%}.ow-banner-copy{max-width:82%}.ow-banner h2{font-size:25px}.ow-banner p{max-width:67%;font-size:10px}.ow-banner button{font-size:10px;padding:10px}.ow-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.ow-card{padding:15px}.ow-study-index-list{grid-template-columns:1fr}.top{padding:0 11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.motion-page{animation:none!important}}
+
+/* Enter transitions for nested library tabs, unit details and planner mode */
+.ow-study-detail,.ow-timeline,.ow-week-grid{animation:owPageAppear .3s var(--motion-ease) both}
+.ow-study-index-item.active,.ow-segment button.selected{transition:background-color .26s ease,box-shadow .26s ease,color .26s ease}
+@media(prefers-reduced-motion:reduce){.ow-study-detail,.ow-timeline,.ow-week-grid{animation:none!important}}
